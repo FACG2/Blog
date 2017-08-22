@@ -7,8 +7,12 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "semistandard"
   },
+  "pre-commit":[
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FACG2/Blog.git"
@@ -21,6 +25,7 @@
   "homepage": "https://github.com/FACG2/Blog#readme",
   "devDependencies": {
     "nodemon": "^1.11.0",
+    "pre-commit": "^1.2.2",
     "shot": "^3.4.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.8.0"
