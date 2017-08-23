@@ -24,11 +24,12 @@
 
   <section>
     <form class="form" action="/login" method="POST">
-      <input type="text" name="name" value="" placeholder="name ...." required>
-      <input type="text" name="password" value="" placeholder="Password ...." required>
+      <input id="name" type="text" name="name" value="" placeholder="Name ....">
+      <span class="errorMsg" id="validName"></span>
+      <input id="password" type="password" name="password" value="" placeholder="Password ....">
+      <span class="errorMsg" id="message"></span>
+      <button id="subLog" type="submit" name="button">Login</button>
       <span><a href="./signup">If you don't have account</a></span>
-
-      <button type="submit">login</button>
     </form>
   </section>
   <script src='./js/request.js'></script>
