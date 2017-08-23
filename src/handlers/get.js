@@ -160,6 +160,35 @@ function handleSignup (req, res) {
   });
 }
 
+function handleNewBlog (req, res) {
+  if (req.headers.cookie) {
+    const token = cookie.parse(req.headers.cookie).token;
+    jwt.verify(token, SECRET, (err, result) => {
+      if (err) {
+        res.writeHead(302, {'Location': '/'});
+        res.end();
+      } else {
+        readAddBlog(req, res);
+      }
+    });
+  } else {
+    res.writeHead(302, {'Location': '/'});
+    res.end();
+  }
+}
+
+function readAddBlog (req, res) {
+  fs.readFile(path.join(__dirname, '/../../public/add_blog.html'), (err, data) => {
+    if (err) {
+      res.writeHead(302, {'Location': '/'});
+      res.end();
+    } else {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(data);
+    }
+  });
+}
+
 function handleGetData (req, res) {
   if (req.headers.cookie) {
     const token = cookie.parse(req.headers.cookie).token;
@@ -194,5 +223,6 @@ module.exports = {
   handleLogout,
   handleGeneric,
   handleSignup,
-  handleGetData
+  handleGetData,
+  handleNewBlog
 };
