@@ -1,7 +1,5 @@
 (function () {
-  // eslint-disable-next-line no-use-before-define
-  var request = request || console.error('request not defined');
-  request('/getdata', 'GET', function (err, res) {
+  request('/getdata', 'GET', function (err, res) {//eslint-disable-line
     if (err) {
       console.log(err);
     } else {
