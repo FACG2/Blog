@@ -197,7 +197,7 @@ function handleGetData (req, res) {
         res.writeHead(500, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({message: 'error'}));
       } else {
-        query('SELECT * FROM posts', [], (err1, records) => {
+        query('SELECT posts.id , posts.title , posts.contents , posts.post_date , users.id , users.name FROM posts INNER JOIN users ON users.id = posts.user_id;', [], (err1, records) => {
           if (err) {
             res.writeHead(500, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({message: 'error'}));
@@ -215,6 +215,18 @@ function handleGetData (req, res) {
   }
 }
 
+function handleNotFound (req, res) {
+  fs.readFile(path.join(__dirname, '/../../public/404.html'), (err, data) => {
+    if (err) {
+      res.writeHead(302, {'Location': '/'});
+      res.end();
+    } else {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(data);
+    }
+  });
+}
+
 module.exports = {
   handleHome,
   handleLogin,
@@ -224,5 +236,6 @@ module.exports = {
   handleGeneric,
   handleSignup,
   handleGetData,
-  handleNewBlog
+  handleNewBlog,
+  handleNotFound
 };

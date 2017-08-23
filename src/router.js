@@ -28,6 +28,8 @@ function router (req, res) {
     postHandlers.handleEditBlog(req, res);
   } else if (url === '/blogs/delete') {
     postHandlers.handleDeleteBlog(req, res);
+  } else if (url === '/404') {
+    getHandlers.handleNotFound(req, res);
   } else {
     getHandlers.handleGeneric(req, res);
   }

@@ -11,6 +11,7 @@
 })();
 
 function dom (blogs) {
+  console.log(blogs);
   return blogs.reduce(function (res, blog) {
     return res +
       '<div class="card_viwe">' +
@@ -19,6 +20,7 @@ function dom (blogs) {
       '<p id="post_content">' +
       blog.contents +
       '</p>' +
+      '<h6>' + blog.name + '</h6>' +
       '</div>' +
       '</div>';
   }, '');
