@@ -13,10 +13,9 @@ function router (req, res) {
   } else if (url === '/sign-up') {
     postHandlers.handleSignup(req, res);
   } else if (url === '/blogs') {
-    /*
-
-    */
     getHandlers.handleBlogs(req, res);
+  } else if (url === '/getdata') {
+    getHandlers.handleGetData(req, res);
   } else if (url === '/user-blog') {
     getHandlers.handleUserBlog(req, res);
   } else if (url === '/blogs/add') {

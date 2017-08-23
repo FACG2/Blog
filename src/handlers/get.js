@@ -165,10 +165,10 @@ function handleNewBlog (req, res) {
     const token = cookie.parse(req.headers.cookie).token;
     jwt.verify(token, SECRET, (err, result) => {
       if (err) {
-        res.writeHead(500, {'Content-Type': 'text/html'});
-        res.end('Internal Server Error');
+        res.writeHead(302, {'Location': '/'});
+        res.end();
       } else {
-        readNewBlog(req, res);
+        readAddBlog(req, res);
       }
     });
   } else {
@@ -177,16 +177,42 @@ function handleNewBlog (req, res) {
   }
 }
 
-function readNewBlog (req, res) {
+function readAddBlog (req, res) {
   fs.readFile(path.join(__dirname, '/../../public/add_blog.html'), (err, data) => {
     if (err) {
-      res.writeHead(302, {'Location': '/blogs'});
+      res.writeHead(302, {'Location': '/'});
       res.end();
     } else {
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(data);
     }
   });
+}
+
+function handleGetData (req, res) {
+  if (req.headers.cookie) {
+    const token = cookie.parse(req.headers.cookie).token;
+    jwt.verify(token, SECRET, (err, result) => {
+      if (err) {
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'error'}));
+      } else {
+        query('SELECT * FROM posts', [], (err1, records) => {
+          if (err) {
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({message: 'error'}));
+          } else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            console.log(result);
+            res.end(JSON.stringify({username: result.name, records: records}));
+          }
+        });
+      }
+    });
+  } else {
+    res.writeHead(302, {'Location': '/'});
+    res.end();
+  }
 }
 
 module.exports = {
@@ -197,5 +223,6 @@ module.exports = {
   handleLogout,
   handleGeneric,
   handleSignup,
+  handleGetData,
   handleNewBlog
 };
