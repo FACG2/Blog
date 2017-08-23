@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "semistandard --fix",
     "start": "node src/server.js",
-    "watch": "nodemon src/server.js"
+    "watch": "nodemon src/server.js",
+    "test": "node test/back-end-test.js | tap-spec"
   },
   "pre-commit": [
     "lint"
