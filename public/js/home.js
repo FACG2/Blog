@@ -1,5 +1,4 @@
 (function () {
-  // eslint-disable-next-line no-use-before-define
   request('/getdata', 'GET', function (err, res) {//eslint-disable-line
     if (err) {
       console.log(err);
