@@ -3,8 +3,8 @@ const queryString = require('querystring');
 const jwt = require('jsonwebtoken');
 const SECRET = 'afdhasjkhdfsadjfhskdjhf';
 const bcrypt = require('bcryptjs');
-const path = require('path');
-const fs = require('fs');
+// const path = require('path');
+// const fs = require('fs');
 const cookie = require('cookie');
 
 function handleSignup (req, res) {
