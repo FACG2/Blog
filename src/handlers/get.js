@@ -160,6 +160,35 @@ function handleSignup (req, res) {
   });
 }
 
+function handleNewBlog (req, res) {
+  if (req.headers.cookie) {
+    const token = cookie.parse(req.headers.cookie).token;
+    jwt.verify(token, SECRET, (err, result) => {
+      if (err) {
+        res.writeHead(500, {'Content-Type': 'text/html'});
+        res.end('Internal Server Error');
+      } else {
+        readNewBlog(req, res);
+      }
+    });
+  } else {
+    res.writeHead(302, {'Location': '/'});
+    res.end();
+  }
+}
+
+function readNewBlog (req, res) {
+  fs.readFile(path.join(__dirname, '/../../public/add_blog.html'), (err, data) => {
+    if (err) {
+      res.writeHead(302, {'Location': '/blogs'});
+      res.end();
+    } else {
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(data);
+    }
+  });
+}
+
 module.exports = {
   handleHome,
   handleLogin,
@@ -167,5 +196,6 @@ module.exports = {
   handleUserBlog,
   handleLogout,
   handleGeneric,
-  handleSignup
+  handleSignup,
+  handleNewBlog
 };

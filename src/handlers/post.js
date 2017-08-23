@@ -3,6 +3,9 @@ const queryString = require('querystring');
 const jwt = require('jsonwebtoken');
 const SECRET = 'afdhasjkhdfsadjfhskdjhf';
 const bcrypt = require('bcryptjs');
+const path = require('path');
+const fs = require('fs');
+const cookie = require('cookie');
 
 function handleSignup (req, res) {
   /*
@@ -54,7 +57,35 @@ function handleSignup (req, res) {
 }
 
 function handleAddBlog (req, res) {
-
+  let content = '';
+  req.on('data', (chunk) => {
+    content += chunk;
+  });
+  req.on('end', () => {
+    const data = queryString.parse(content);
+    if (req.headers.cookie) {
+      const token = cookie.parse(req.headers.cookie).token;
+      jwt.verify(token, SECRET, (err, result) => {
+        if (err) {
+          res.writeHead(302, {'Location': '/'});
+          res.end();
+        } else {
+          query('INSERT INTO posts(title,contents,post_date,user_id) VALUES ($1,$2,$3,$4) RETURNING * ', [data.title, data.contents, data.post_date, result.id], (error, res1) => {
+            if (error) {
+              console.log(error);
+              res.end('There is error');
+            } else {
+              res.writeHead(302, {'Location': '/blogs'});
+              res.end();
+            }
+          });
+        }
+      });
+    } else {
+      res.writeHead(302, {'Location': '/'});
+      res.end();
+    }
+  });
 }
 
 function handleEditBlog (req, res) {
@@ -64,23 +95,6 @@ function handleEditBlog (req, res) {
 function handleDeleteBlog (req, res) {
 
 }
-//
-// function validateSignup (data, cb) {
-//   /* validate username */
-//   if (typeof data.username !== 'string' || data.username === '') {
-//     // return cb('invalid username');
-//   }
-//   /* validate password */
-//   if (typeof data.password !== 'string' || data.password === '') {
-//     // return cb('invalid password');
-//   }
-//   /* validate confirm-password */
-//   if (data.password !== data.confirmPassword) {
-//     // return cb('password does not match!!!');
-//   }
-//   /* validate email */
-//   // cb(true);
-// }
 
 module.exports = {
   handleSignup,

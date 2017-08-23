@@ -21,6 +21,8 @@ function router (req, res) {
     getHandlers.handleUserBlog(req, res);
   } else if (url === '/blogs/add') {
     postHandlers.handleAddBlog(req, res);
+  } else if (url === '/NewBlog') {
+    getHandlers.handleNewBlog(req, res);
   } else if (url === '/logout') {
     getHandlers.handleLogout(req, res);
   } else if (url === '/blogs/edit') {
