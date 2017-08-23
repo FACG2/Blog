@@ -160,6 +160,32 @@ function handleSignup (req, res) {
   });
 }
 
+function handleGetData (req, res) {
+  if (req.headers.cookie) {
+    const token = cookie.parse(req.headers.cookie).token;
+    jwt.verify(token, SECRET, (err, result) => {
+      if (err) {
+        res.writeHead(500, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({message: 'error'}));
+      } else {
+        query('SELECT * FROM posts', [], (err1, records) => {
+          if (err) {
+            res.writeHead(500, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({message: 'error'}));
+          } else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            console.log(result);
+            res.end(JSON.stringify({username: result.name, records: records}));
+          }
+        });
+      }
+    });
+  } else {
+    res.writeHead(302, {'Location': '/'});
+    res.end();
+  }
+}
+
 module.exports = {
   handleHome,
   handleLogin,
@@ -167,5 +193,6 @@ module.exports = {
   handleUserBlog,
   handleLogout,
   handleGeneric,
-  handleSignup
+  handleSignup,
+  handleGetData
 };
