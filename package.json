@@ -8,11 +8,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "semistandard",
+    "lint": "semistandard --fix",
     "start": "node src/server.js",
     "watch": "nodemon src/server.js"
   },
-  "pre-commit":[
+  "pre-commit": [
     "lint"
   ],
   "repository": {
@@ -33,6 +33,7 @@
     "tape": "^4.8.0"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie": "^0.3.1",
     "env2": "^2.2.0",
     "jsonwebtoken": "^7.4.3",

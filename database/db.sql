@@ -4,9 +4,9 @@ DROP TABLE IF EXISTS users, posts, comments cascade ;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100) UNIQUE NOT NULL,
   email VARCHAR(100) NOT NULL,
-  password VARCHAR(30) NOT NULL
+  password VARCHAR(300) NOT NULL
 );
 
 CREATE TABLE posts (
@@ -26,8 +26,8 @@ CREATE TABLE comments (
 );
 
 INSERT INTO users (name, email, password) VALUES
-('aia', 'aaa_2008azhar@hotmail.com', '44567aya#'),
-('mahmoud', 'mrm7moud@hotmail.com', '123456');
+('aia', 'aaa_2008azhar@hotmail.com', '$2a$10$K1gpDblhtcL7beFPELUOie0fUQRHXYO5dJ6vyW0hUH/7yb6x.HlSC'),
+('mahmoud', 'mrm7moud@hotmail.com', '$2a$10$K1gpDblhtcL7beFPELUOie0fUQRHXYO5dJ6vyW0hUH/7yb6x.HlSC');
 
 INSERT INTO posts (title, contents, post_date, user_id) VALUES
 ('blog', 'hello', '2017-08-22',1),
