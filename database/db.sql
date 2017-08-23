@@ -26,8 +26,8 @@ CREATE TABLE comments (
 );
 
 INSERT INTO users (name, email, password) VALUES
-('aia', 'aaa_2008azhar@hotmail.com', '44567aya#'),
-('mahmoud', 'mrm7moud@hotmail.com', '123456');
+('aia', 'aaa_2008azhar@hotmail.com', '$2a$10$K1gpDblhtcL7beFPELUOie0fUQRHXYO5dJ6vyW0hUH/7yb6x.HlSC'),
+('mahmoud', 'mrm7moud@hotmail.com', '$2a$10$K1gpDblhtcL7beFPELUOie0fUQRHXYO5dJ6vyW0hUH/7yb6x.HlSC');
 
 INSERT INTO posts (title, contents, post_date, user_id) VALUES
 ('blog', 'hello', '2017-08-22',1),
