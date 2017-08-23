@@ -1,5 +1,5 @@
 const query = require('./../query');
-// const queryString = require('querystring');
+const queryString = require('querystring');
 const jwt = require('jsonwebtoken');
 const SECRET = 'afdhasjkhdfsadjfhskdjhf';
 const bcrypt = require('bcryptjs');
@@ -11,17 +11,17 @@ function handleSignup (req, res) {
     redirect to home.html
     input: username , password , email
   */
-  // let content = '';
+  let content = '';
   req.on('data', (chunk) => {
-    // content += chunk;
+    content += chunk;
   });
   req.on('end', () => {
-    // const data = queryString.parse(content);
-    const data = {
-      name: 'test',
-      password: '123',
-      email: 'a@a.a'
-    };
+    const data = queryString.parse(content);
+    // const data = {
+    //   name: 'test',
+    //   password: '123',
+    //   email: 'a@a.a'
+    // };
     if (req.headers.cookie) {
       res.writeHead(302, {'location': '/'});
       res.end();
