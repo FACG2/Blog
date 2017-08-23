@@ -1,0 +1,45 @@
+/*Add styling below*/
+
+* {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+}
+
+body {
+  margin: 0;
+}
+
+section {
+  width: 100%;
+}
+
+input {
+  border: none;
+  padding: 2%;
+  border-bottom: 1px solid lightgrey;
+  margin-top: 2%;
+  font-size: 0.8rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 7%;
+}
+
+#content {
+  height: 300px;
+}
+
+button {
+  width: 13%;
+  height: 33px;
+  margin-top: 4%;
+  background-color: #ee6e73;
+  border: none;
+  color: white;
+  font-size: 0.8rem;
+  align-self:flex-end;
+}
