@@ -139,8 +139,8 @@ function handleGeneric (req, res) {
   const fileExtension = parts[parts.length - 1];
   fs.readFile(path.join(__dirname, '/../../public', req.url), (err, data) => {
     if (err) {
-      res.writeHead(500, {'Content-Type': 'text/html'});
-      res.end('Internal Server Error');
+      res.writeHead(302, {'Location': '/404'});
+      res.end();
     } else {
       res.writeHead(200, {'Content-Type': contentTypes[fileExtension]});
       res.end(data);
