@@ -32,8 +32,8 @@ function handleHome (req, res) {
 function readHome (req, res) {
   fs.readFile(path.join(__dirname, '/../../public/index.html'), (err, data) => {
     if (err) {
-      res.writeHead(500, {'Content-Type': 'text/html'});
-      res.end('Internal Server Error');
+      res.writeHead(302, {'Location': '/404'});
+      res.end();
     } else {
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(data);
@@ -42,10 +42,6 @@ function readHome (req, res) {
 }
 
 function handleLogin (req, res) {
-  // const data = {
-  //   name: 'test',
-  //   password: '123'
-  // };
   let content = '';
   req.on('data', (chunk) => {
     content += chunk;
@@ -116,8 +112,8 @@ function handleBlogs (req, res) {
 function readBlogs (req, res) {
   fs.readFile(path.join(__dirname, '/../../public/home.html'), (err, data) => {
     if (err) {
-      res.writeHead(500, {'Content-Type': 'text/html'});
-      res.end('Server Error');
+      res.writeHead(302, {'Location': '/404'});
+      res.end();
     } else {
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.end(data);
@@ -126,7 +122,7 @@ function readBlogs (req, res) {
 }
 
 function handleUserBlog (req, res) {
-
+  // Not Implemented Yet
 }
 
 function handleLogout (req, res) {
@@ -151,7 +147,7 @@ function handleGeneric (req, res) {
 function handleSignup (req, res) {
   fs.readFile(path.join(__dirname, '/../../public/sign_up.html'), (err, data) => {
     if (err) {
-      res.writeHead(302, {'Location': '/'});
+      res.writeHead(302, {'Location': '/404'});
       res.end();
     } else {
       res.writeHead(200, {'Content-Type': 'text/html'});
@@ -180,7 +176,7 @@ function handleNewBlog (req, res) {
 function readAddBlog (req, res) {
   fs.readFile(path.join(__dirname, '/../../public/add_blog.html'), (err, data) => {
     if (err) {
-      res.writeHead(302, {'Location': '/'});
+      res.writeHead(302, {'Location': '/404'});
       res.end();
     } else {
       res.writeHead(200, {'Content-Type': 'text/html'});
