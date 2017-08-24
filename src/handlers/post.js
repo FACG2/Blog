@@ -37,12 +37,14 @@ function handleSignup (req, res) {
         data.password = hashedPassword;
         query(`INSERT INTO users(name , email , password) VALUES($1,$2,$3) RETURNING *`, [data.name, data.email, data.password], (err1, record) => {
           if (err1) {
-            res.end('error is hereeeee');
+            res.writeHead(302, {'Location': '/signup'});
+            res.end();
           } else {
             // console.log(record);
             jwt.sign({name: record[0].name, id: record[0].id}, SECRET, (err2, token) => {
               if (err2) {
-                console.log(err2);
+                // console.log(err2);
+                res.writeHead(302, {'Location': '/'});
                 res.end();
               } else {
                 res.writeHead(302, {'Set-Cookie': `token=${token}; Max-Age=99999`, 'Location': '/blogs'});

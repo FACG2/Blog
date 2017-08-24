@@ -20,9 +20,19 @@ h1 {
   font-size: 40px;
 }
 
+h6 {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+  color: #ee6e73;
+}
+
 p {
   display: flex;
   justify-content: center;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
 }
 
 
