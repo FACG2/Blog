@@ -48,7 +48,7 @@ Make an APP for add blog post
 
 
 ## Team :sunglasses: :
-* [Aia](http://github.com/)
-* [Salwa](http://github.com/)
-* [Samir](http://github.com/)
+* [Aia](http://github.com/EngAyoosh)
+* [Salwa](http://github.com/SalwaAlnazly)
+* [Samer](http://github.com/SamerElaila)
 * [Mahmoud](http://github.com/mrm7moud)
