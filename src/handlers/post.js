@@ -22,7 +22,7 @@ function handleSignup (req, res) {
         res.end();
       } else {
         console.log(isValid(data));
-        if (isValid(data)) {
+        if (!isValid(data)) {
           data.password = hashedPassword;
           query(`INSERT INTO users(name , email , password) VALUES($1,$2,$3) RETURNING *`, [data.name, data.email, data.password], (err1, record) => {
             if (err1) {
