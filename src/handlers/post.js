@@ -3,59 +3,57 @@ const queryString = require('querystring');
 const jwt = require('jsonwebtoken');
 const SECRET = 'afdhasjkhdfsadjfhskdjhf';
 const bcrypt = require('bcryptjs');
-// const path = require('path');
-// const fs = require('fs');
 const cookie = require('cookie');
 
 function handleSignup (req, res) {
-  /*
-    insert data to DB
-    create a new cookie
-    redirect to home.html
-    input: username , password , email
-  */
   let content = '';
   req.on('data', (chunk) => {
     content += chunk;
   });
   req.on('end', () => {
     const data = queryString.parse(content);
-    // const data = {
-    //   name: 'test',
-    //   password: '123',
-    //   email: 'a@a.a'
-    // };
     if (req.headers.cookie) {
       res.writeHead(302, {'location': '/'});
       res.end();
     }
     bcrypt.hash(data.password, 10, (err, hashedPassword) => {
       if (err) {
-        res.end(err);
+        console.log(err);
+        res.end();
       } else {
-        // console.log(hashedPassword, 'hashedPassword');
-        data.password = hashedPassword;
-        query(`INSERT INTO users(name , email , password) VALUES($1,$2,$3) RETURNING *`, [data.name, data.email, data.password], (err1, record) => {
-          if (err1) {
-            res.writeHead(302, {'Location': '/signup'});
-            res.end();
-          } else {
-            // console.log(record);
-            jwt.sign({name: record[0].name, id: record[0].id}, SECRET, (err2, token) => {
-              if (err2) {
-                // console.log(err2);
-                res.writeHead(302, {'Location': '/'});
-                res.end();
-              } else {
-                res.writeHead(302, {'Set-Cookie': `token=${token}; Max-Age=99999`, 'Location': '/blogs'});
-                res.end();
-              }
-            });
-          }
-        });
+        console.log(isValid(data));
+        if (isValid(data)) {
+          data.password = hashedPassword;
+          query(`INSERT INTO users(name , email , password) VALUES($1,$2,$3) RETURNING *`, [data.name, data.email, data.password], (err1, record) => {
+            if (err1) {
+              res.writeHead(302, {'Location': '/signup'});
+              res.end();
+            } else {
+              jwt.sign({name: record[0].name, id: record[0].id}, SECRET, (err2, token) => {
+                if (err2) {
+                  res.writeHead(302, {'Location': '/'});
+                  res.end();
+                } else {
+                  res.writeHead(302, {'Set-Cookie': `token=${token}; Max-Age=99999`, 'Location': '/blogs'});
+                  res.end();
+                }
+              });
+            }
+          });
+        } else {
+          // if data is not valid
+          res.writeHead(302, {'Location': '/signup'});
+          res.end();
+        }
       }
     });
   });
+}
+
+function isValid (data) {
+  return (typeof data.name !== 'string' || data.name !== '') &&
+          (typeof data.email !== 'string' || !data.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/))  && //eslint-disable-line
+          (typeof data.password !== 'string') && (data.confirmPassword !== data.password);
 }
 
 function handleAddBlog (req, res) {
@@ -74,8 +72,8 @@ function handleAddBlog (req, res) {
         } else {
           query('INSERT INTO posts(title,contents,post_date,user_id) VALUES ($1,$2,$3,$4) RETURNING * ', [data.title, data.contents, data.post_date, result.id], (error, res1) => {
             if (error) {
-              console.log(error);
-              res.end('There is error');
+              res.writeHead(302, {'Location': '/404'});
+              res.end();
             } else {
               res.writeHead(302, {'Location': '/blogs'});
               res.end();
@@ -91,11 +89,11 @@ function handleAddBlog (req, res) {
 }
 
 function handleEditBlog (req, res) {
-
+ // Not Implemented Yet
 }
 
 function handleDeleteBlog (req, res) {
-
+ // Not Implemented Yet
 }
 
 module.exports = {

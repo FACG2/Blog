@@ -20,14 +20,15 @@
 
   <section>
     <form class="form" action="/sign-up" method="POST">
-      <input type="text" name="name" value="" placeholder="name ...." required>
-      <input type="text" name="email" value="" placeholder="email ...." required>
-      <input type="password" name="password" value="" placeholder="Password ...." required>
-      <input type="password" name="confirm_password" value="" placeholder="Renter Password ...." required>
+      <input type="text" class='username' name="name" value="" placeholder="name ...." required>
+      <input type="text" class='email' name="email" value="" placeholder="email ...." required>
+      <input type="password" class=password name="password" value="" placeholder="Password ...." required>
+      <input type="password" class='confirm-password' name="confirm_password" value="" placeholder="Renter Password ...." required>
+      <div class='message'></div>
       <button type="submit" name="button">signup</button>
     </form>
   </section>
-
+  <script src='./js/request.js'></script>
   <script type="text/javascript" src="./js/sign_up.js"></script>
 </body>
 </html>
